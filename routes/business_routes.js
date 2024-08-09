@@ -9,6 +9,6 @@ businessRouter.post("/users/business", remoteUpload.single('profilePhoto'), chec
 
 businessRouter.patch("/users/business/:id", remoteUpload.single('profilePhoto'), checkUserSession, updateBusinessProfile);
 
-businessRouter.get("/users/business/:id", remoteUpload.single('profilePhoto'), checkUserSession, getBusinessProfile);
+businessRouter.get("/users/business/:id", checkUserSession, getBusinessProfile);
 
-businessRouter.delete("/users/business/:id", remoteUpload.single('profilePhoto'), checkUserSession, deleteBusinessProfile);
+businessRouter.delete("/users/business/:id", checkUserSession, deleteBusinessProfile);
