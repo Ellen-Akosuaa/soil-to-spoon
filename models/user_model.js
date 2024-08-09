@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { toJSON } from "@reis/mongoose-to-json";
 
 const userSchema = new Schema({
 
@@ -10,11 +11,13 @@ const userSchema = new Schema({
     password: { type: String, required: true },
     confirmPassword: { type: String },
     termsAndConditions: { type: Boolean },
-    role: { type: String, enum: ["farmer", "consumer"], required: true },
+    userType: { type: String, enum: ["Farmer", "Business"], required: true },
 
 
 }, {
     timestamps: true
 });
+
+userSchema.plugin(toJSON);
 
 export const userModel = model("User", userSchema)

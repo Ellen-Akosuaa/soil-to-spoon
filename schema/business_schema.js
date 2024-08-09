@@ -1,12 +1,10 @@
 import Joi from "joi";
 
-export const consumerSchema = Joi.object({
-
-    name: Joi.string().required(),
-    email: Joi.string().email().required(),
+export const businessSchema = Joi.object({
     businessName: Joi.string().required(),
     businessLocation: Joi.string(),
     businessPhone: Joi.string().required(),
-    businessDescription: Joi.string(),
+    businessEmail: Joi.string().email().required(),businessDescription: Joi.string(),
+    user: Joi.string().required()
 
 }) .with("password", "confirmPassword");

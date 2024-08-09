@@ -1,4 +1,5 @@
 import { Schema, model, Types } from "mongoose";
+import { toJSON } from "@reis/mongoose-to-json";
 
 const productSchema = new Schema({
     productName: { type: String, required: true },
@@ -8,6 +9,10 @@ const productSchema = new Schema({
     productCategory: { type: String, enum: ["Vegetables", "Fruits", "Grains", "Poultry", "Meat", "Roots and Tubers"], required: true},
     farmer: { type: Types.ObjectId, ref: "User", required: true }
 
+  },{
+    timestamps: true
   });
+  
+  productSchema.plugin(toJSON);
   
   export const productModel = model("Product", productSchema);
