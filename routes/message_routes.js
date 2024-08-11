@@ -4,6 +4,6 @@ import { checkUserSession } from "../middlewares/auth.js";
 
 export const messageRouter = Router();
 
-messageRouter.get("messages/history", checkUserSession, saveMessage);
+messageRouter.get("/messages", checkUserSession, saveMessage);
 
-messageRouter.get("messages/history", checkUserSession, getMessages);
+messageRouter.get("/messages/history", checkUserSession, getMessages);

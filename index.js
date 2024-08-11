@@ -25,7 +25,7 @@ const io = new Server(server);
 
 expressOasGenerator.handleResponses(app, {
     alwaysServeDocs: true,
-    tags: ["auth", "farmers", "businesses", "products", "messages", "payments"],
+    tags: ["auth", "farmers", "business", "products", "messages", "payments"],
     mongooseModels: mongoose.modelNames(), 
 })
 
