@@ -10,6 +10,7 @@ const farmerSchema = new Schema({
   farmLocation: { type: String },
   farmDescription: { type: String },
   farmImages: { type: String }, 
+  products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
   user:{type: Types.ObjectId, ref: 'User', required: true, unique: true},
   
 });

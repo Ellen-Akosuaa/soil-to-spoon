@@ -7,7 +7,8 @@ const productSchema = new Schema({
     price: { type: String, required: true },
     quantity: { type: String, required: true },
     productCategory: { type: String, enum: ["Vegetables", "Fruits", "Grains", "Poultry", "Meat", "Roots and Tubers"], required: true},
-    farmer: { type: Types.ObjectId, ref: "User", required: true }
+    productImages: {type: String},
+    farmer: { type: Types.ObjectId, ref: "Farmer", required: true }
 
   },{
     timestamps: true
