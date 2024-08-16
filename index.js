@@ -15,6 +15,7 @@ import { businessRouter } from "./routes/business_routes.js";
 import { paymentRouter } from "./routes/payment_routes.js";
 import { messageRouter } from "./routes/message_routes.js";
 import { productRouter } from "./routes/product_routes.js";
+import { cartRouter } from "./routes/cart_routes.js";
 
 // create express app
 
@@ -25,7 +26,7 @@ const io = new Server(server);
 
 expressOasGenerator.handleResponses(app, {
     alwaysServeDocs: true,
-    tags: ["auth", "farmers", "business", "products", "messages", "payments"],
+    tags: ["auth", "farmers", "business", "products", "messages", "payments", "cart"],
     mongooseModels: mongoose.modelNames(), 
 })
 
@@ -56,7 +57,7 @@ app.use('/api/v1', businessRouter);
 app.use('/api/v1', paymentRouter);
 app.use('/api/v1', messageRouter);
 app.use('/api/v1', productRouter);
-
+app.use('/api/v1', cartRouter);
 
 expressOasGenerator.handleRequests();
 app.use((req, res) => res.redirect('/api-docs/'));

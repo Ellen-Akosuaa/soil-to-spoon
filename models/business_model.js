@@ -9,7 +9,7 @@ const businessSchema = new Schema({
   businessPhone: { type: String, required: true},
   businessEmail: { type: String, required: true, unique: true },
   businessDescription: { type: String },
-  user:{type: Types.ObjectId, ref: 'User', required: true, unique: true}
+  user:{type: Types.ObjectId, ref: 'User', required: true}
   
 });
 

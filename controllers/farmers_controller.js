@@ -10,7 +10,7 @@ export const createFarmerProfile = async (req, res) => {
       const { error, value } = farmerSchema.validate({
         ...req.body,
         profilePhoto: req.files?.profilePhoto[0].filename,
-        farmImage: req.files?.farmImages[0].filename
+        farmImages: req.files?.farmImages[0].filename
       });
   
   
