@@ -5,7 +5,7 @@ import { userSchema } from "../schema/user_schema.js";
 
 
 export const signup = async (req, res) => {
-    const {error, value} = userSchema.validate({...req.body})
+    const {error, value} = userSchema.validate(req.body)
     if(error){
         return res.status(400).send(error.details[0].message)
     }
@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
     
     const findIfUserExist = await userModel.findOne({email})
     if (findIfUserExist){
-        return res.status(401).send('user has already signed up')
+        return res.status(401).send('User already signed up')
     } else{
         const hashedPassword = await bcrypt.hash(value.password,12)
         value.password = hashedPassword;
@@ -27,7 +27,7 @@ export const signup = async (req, res) => {
 
 
 // Login user
-export const login = async (req, res, next) => {
+export const sessionLogin = async (req, res, next) => {
     try {
        const { username, email, password } = req.body;
 
@@ -94,7 +94,7 @@ export const login = async (req, res, next) => {
   };
  
 // Token
-  export const token = async (req, res, next) => {
+  export const login = async (req, res, next) => {
     try {
        const { username, email, password } = req.body;
   

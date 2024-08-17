@@ -5,10 +5,11 @@ import { productSchema } from '../schema/product_schema.js';
 // Create a new product
 export const addProduct = async (req, res) => {
     try {
+        const productImageFilenames = req.files?.productImages.map((file) => file.filename) || [];
         // Validate request body
         const { error, value } = productSchema.validate({
             ...req.body,
-            productImages: req.files?.productImages[0].filename,
+            productImages:productImageFilenames
         });
         if (error) {
             return res.status(400).json({ error: error.details[0].message });
@@ -71,10 +72,11 @@ export const getProductById = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
+        const productImageFilenames = req.files?.productImages.map((file) => file.filename) || [];
         // Validate request body
         const { error, value } = productSchema.validate({
             ...req.body,
-            productImages: req.files?.productImages[0].filename,
+            productImages: productImageFilenames.length > 0 ? productImageFilenames: req.body.productImages,
         });
         if (error) {
             return res.status(400).json({ error: error.details[0].message });

@@ -7,13 +7,13 @@ export const farmerRouter = Router();
 
 farmerRouter.post("/users/farmers", remoteUpload.fields([
         { name: "profilePhoto", maxCount: 1 },
-        { name: "farmImages", maxCount: 5 },
+        { name: "farmImages", maxCount: 10 },
      ]), 
      checkUserSession, createFarmerProfile);
 
 farmerRouter.patch("/users/farmers/:Id",remoteUpload.fields([
     { name: "profilePhoto", maxCount: 1 },
-    { name: "farmImages", maxCount: 5 },
+    { name: "farmImages", maxCount: 10 },
  ]), 
  checkUserSession, updateFarmerProfile);
 

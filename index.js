@@ -11,11 +11,12 @@ import Paystack from "paystack-api";
 import MongoStore from "connect-mongo";
 import { userRouter } from "./routes/user_routes.js";
 import { farmerRouter } from "./routes/farmers_routes.js";
-import { businessRouter } from "./routes/business_routes.js";
+import { consumerRouter } from "./routes/consumer_routes.js";
 import { paymentRouter } from "./routes/payment_routes.js";
 import { messageRouter } from "./routes/message_routes.js";
 import { productRouter } from "./routes/product_routes.js";
 import { cartRouter } from "./routes/cart_routes.js";
+import { restartServer } from "./restart_server.js";
 
 // create express app
 
@@ -26,7 +27,7 @@ const io = new Server(server);
 
 expressOasGenerator.handleResponses(app, {
     alwaysServeDocs: true,
-    tags: ["auth", "farmers", "business", "products", "messages", "payments", "cart"],
+    tags: ["auth", "farmers", "consumers", "products", "messages", "payments", "cart"],
     mongooseModels: mongoose.modelNames(), 
 })
 
@@ -50,10 +51,14 @@ app.use(session({
     })
 }));
 
+app.get("/api/v1/health", (req, res) => {
+  res.json({ status: "UP" });
+});
+
 
 app.use('/api/v1', userRouter);
 app.use('/api/v1', farmerRouter);
-app.use('/api/v1', businessRouter);
+app.use('/api/v1', consumerRouter);
 app.use('/api/v1', paymentRouter);
 app.use('/api/v1', messageRouter);
 app.use('/api/v1', productRouter);
@@ -103,6 +108,22 @@ io.on('connection', (socket) => {
 
 
 const port = process.env.PORT;
-app.listen(port, () => {
-    console.log(`App is listening`);
-});
+
+const reboot = async () => {
+  setInterval(restartServer, process.env.INTERVAL)
+  }
+  
+  dbConnection()
+    .then(() => {
+      app.listen(port, () => {
+          reboot().then(() => {
+          console.log(`Server Restarted`);
+        });
+        console.log(`Server is connected to Port`);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      process.exit(-1);
+    });
+

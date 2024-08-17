@@ -6,12 +6,12 @@ import { remoteUpload } from "../middlewares/uploads.js";
 export const productRouter = Router();
 
 productRouter.post("/products", remoteUpload.fields([
-    { name: "productImages", maxCount: 8 },
+    { name: "productImages", maxCount: 10 },
  ]), 
  checkUserSession, addProduct);
 
  productRouter.patch("/products", remoteUpload.fields([
-    { name: "productImages", maxCount: 8 },
+    { name: "productImages", maxCount: 10 },
  ]), 
  checkUserSession, updateProduct);
 

@@ -1,13 +1,13 @@
-import { businessModel } from "../models/business_model.js";
-import { businessSchema } from "../schema/business_schema.js";
+import { consumerModel } from "../models/consumer_model.js";
+import { consumerSchema } from "../schema/consumer_schema.js";
 import { userModel } from "../models/user_model.js"
 
 
-// Create Business profile
-export const createBusinessProfile = async (req, res) => {
+// Create Consumer profile
+export const createConsumerProfile = async (req, res) => {
     
     try {
-      const { error, value } = businessSchema.validate({
+      const { error, value } = consumerSchema.validate({
         ...req.body,
         profilePhoto: req.file.profilePhoto[0].filename
       });
@@ -26,13 +26,13 @@ export const createBusinessProfile = async (req, res) => {
   
       console.log(value)
   
-      const profile = await businessModel.create({ ...value, user: userId });
+      const profile = await consumerModel.create({ ...value, user: userId });
   
-      user.businessProfile = profile._id;
+      user.consumerProfile = profile._id;
   
       await user.save();
   
-      res.status(201).json({message: "Business Profile Created"});
+      res.status(201).json({message: "Profile Created"});
     } catch (error) {
       console.log(error);
     }
@@ -40,9 +40,9 @@ export const createBusinessProfile = async (req, res) => {
   
   
 //   Update Profile 
-  export const updateBusinessProfile = async (req, res) => {
+  export const updateConsumerProfile = async (req, res) => {
       try {
-        const { error, value } = businessSchema.validate({
+        const { error, value } = consumerSchema.validate({
           ...req.body,
           profilePhoto: req.file.profilePhoto[0].filename
         });
@@ -57,12 +57,12 @@ export const createBusinessProfile = async (req, res) => {
           return res.status(404).send("User not found");
         }
     
-        const profile = await businessModel.findByIdAndUpdate(req.params.id, value, { new: true });
+        const profile = await consumerModel.findByIdAndUpdate(req.params.id, value, { new: true });
           if (!profile) {
-              return res.status(404).send("Business Profile not found");
+              return res.status(404).send("Profile not found");
           }
     
-        res.status(201).json({message: "Business Profile Updated"});
+        res.status(201).json({message: "Profile Updated"});
       } catch (error) {
         console.log(error);
       }
@@ -70,13 +70,13 @@ export const createBusinessProfile = async (req, res) => {
     
   
   
-//   Get Business profile
-    export const getBusinessProfile = async (req, res) => {
+//   Get consumer profile
+    export const getConsumerProfile = async (req, res) => {
       try {
       //  Get user id from session or request
         const userId = req.session?.user?.id || req?.user?.id;
   
-        const profile = await businessModel.findOne({ user: userId }).populate({
+        const profile = await consumerModel.findOne({ user: userId }).populate({
           path: 'user',
           select: '-password'
         });
@@ -90,8 +90,8 @@ export const createBusinessProfile = async (req, res) => {
     };
   
 
-    // Delete Business profile
-    export const deleteBusinessProfile = async (req, res) => {
+    // Delete consumer profile
+    export const deleteConsumerProfile = async (req, res) => {
         try {
           const userId = req.session?.user?.id || req?.user?.id;
       
@@ -104,18 +104,18 @@ export const createBusinessProfile = async (req, res) => {
             return res.status(404).send("User not found");
           }
       
-          if (!user.businessProfile) {
-            return res.status(404).send("Business profile not found");
+          if (!user.consumerProfile) {
+            return res.status(404).send("consumer profile not found");
           }
       
-          // Delete the business profile
-          await businessModel.findByIdAndDelete(user.businessProfile);
+          // Delete the consumer profile
+          await consumerModel.findByIdAndDelete(user.consumerProfile);
       
-          // Update the user's business profile reference
-          user.businessProfile = null;
+          // Update the user's consumer profile reference
+          user.consumerProfile = null;
           await user.save();
       
-          res.status(200).json({ message: "business profile deleted successfully" });
+          res.status(200).json({ message: "consumer profile deleted successfully" });
         } catch (error) {
           console.error(error);
           res.status(500).send("Server error");

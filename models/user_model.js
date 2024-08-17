@@ -6,12 +6,12 @@ const userSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     otherNames: { type: String },
-    username: { type: String, required: true, unique: true },
-    email: { type: String, required: true, unique: true },
+    username: { type: String, lowercase: true, required: true, unique: true },
+    email: { type: String, lowercase: true, required: true, unique: true },
     password: { type: String, required: true },
     confirmPassword: { type: String },
     termsAndConditions: { type: Boolean },
-    userType: { type: String, enum: ["Farmer", "Business"], required: true },
+    userType: { type: String, enum: ["Farmer", "Consumer"], required: true },
 
 
 }, {

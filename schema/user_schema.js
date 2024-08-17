@@ -10,6 +10,6 @@ export const userSchema = Joi.object({
     password: Joi.string().min(4).required(),
     confirmPassword: Joi.ref("password"),
     termsAndConditions: Joi.boolean().required(),
-    userType: Joi.string().valid("Farmer", "Business")
+    userType: Joi.string().valid("Farmer", "Consumer")
 
 }).with("password", "confirmPassword")

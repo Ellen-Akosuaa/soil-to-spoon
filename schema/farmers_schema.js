@@ -8,7 +8,7 @@ export const farmerSchema = Joi.object({
     farmName: Joi.string().required(),
     farmDescription: Joi.string(), 
     farmLocation: Joi.string(),
-    farmImages: Joi.string(),
+    farmImages: Joi.array().items(Joi.string()),
     user: Joi.string().required()
 
 }) .with("password", "confirmPassword");
