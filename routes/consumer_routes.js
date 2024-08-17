@@ -5,10 +5,10 @@ import { remoteUpload } from "../middlewares/uploads.js";
 
 export const consumerRouter = Router()
 
-consumerRouter.post("/users/consumer", remoteUpload.single('profilePhoto'), checkUserSession, createConsumerProfile);
+consumerRouter.post("/users/consumers", remoteUpload.single('profilePhoto'), checkUserSession, createConsumerProfile);
 
-consumerRouter.patch("/users/consumer/:id", remoteUpload.single('profilePhoto'), checkUserSession, updateConsumerProfile);
+consumerRouter.patch("/users/consumers/:id", remoteUpload.single('profilePhoto'), checkUserSession, updateConsumerProfile);
 
-consumerRouter.get("/users/consumer/:id", checkUserSession, getConsumerProfile);
+consumerRouter.get("/users/consumers/:id", checkUserSession, getConsumerProfile);
 
-consumerRouter.delete("/users/consumer/:id", checkUserSession, deleteConsumerProfile);
+consumerRouter.delete("/users/consumers/:id", checkUserSession, deleteConsumerProfile);
