@@ -126,13 +126,14 @@ export const sessionLogin = async (req, res, next) => {
       //  console.log('user', req.session.user)
        // Return response
        res.status(201).json({
-        message: 'User  logged in',
+        message: 'User logged in',
         accessToken: token,
         user: {
           firstName: user.firstName,
           lastName: user.lastName,
-          username: user.username
-        }
+          username: user.username,
+          userType: user.userType
+        },
       });
     } catch (error) {
        next(error)
